@@ -1,5 +1,6 @@
 from flask import *
 import json, time
+from flask import jsonify
 
 app = Flask(__name__)
 
@@ -23,10 +24,9 @@ def request_page():
 @app.route('/data/', methods=['GET'])
 def wordle_page():
         data = get_wordle_data_set()
-        data_set = {'Page':'Wordle', 'data':data}
-        json_dump = json.dumps(data_set)
-
-        return json_dump
+        response = jsonify({'Page':'Wordle', 'data': data, 'avg': 1324})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 def get_wordle_data_set():
     f = open("data/cuvinte_wordle.txt", "r")  
