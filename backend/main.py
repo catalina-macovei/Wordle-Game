@@ -1,9 +1,12 @@
 from flask import *
 import json, time
 from flask import jsonify
+from wordle_funcs import *
 
-app = Flask(__name__)
+app = Flask(__name__) 
 
+dataset = get_wordle_data_set()  # stocheaza o lista cu cuvintele din fisier
+char_frequency(dataset)
 @app.route('/', methods=['GET'])
 def home_page():
         data_set = {'Page':'Home'}
@@ -23,14 +26,10 @@ def request_page():
 
 @app.route('/data/', methods=['GET'])
 def wordle_page():
-        data = get_wordle_data_set()
-        response = jsonify({'Page':'Wordle', 'data': data, 'avg': 1324})
+        response = jsonify({'Page':'Wordle', 'data': dataset, 'avg': 1324})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-def get_wordle_data_set():
-    f = open("data/cuvinte_wordle.txt", "r")  
-    return [line[:-1] for line in f]
 
 
 if __name__ == '__main__':
