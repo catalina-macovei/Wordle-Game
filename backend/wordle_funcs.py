@@ -7,3 +7,4 @@ def char_frequency(dataset):   #calculeaza frecventa literelor in cuvinte si le 
 def get_wordle_data_set():  # citeste datele din fisier
     f = open("data/cuvinte_wordle.txt", "r")
     return [line[:-1] for line in f]
+    
