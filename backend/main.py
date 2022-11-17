@@ -1,11 +1,12 @@
+import random
 from flask import *
 import json, time
 from flask import jsonify
 from wordle_funcs import *
 
-app = Flask(__name__) 
+app = Flask(__name__)
+secret_word = get_random_secret_word()
 
-dataset = get_wordle_data_set()  # stocheaza o lista cu cuvintele din fisier
 char_frequency(dataset)
 @app.route('/', methods=['GET'])
 def home_page():
@@ -16,17 +17,19 @@ def home_page():
 
 @app.route('/user/', methods=['GET'])
 def request_page():
-        user_query = str(request.args.get('user'))
-
-        data_set = {'Page':'Request', 'user':user_query}
-        json_dump = json.dumps(data_set)
-
-        return json_dump
-
+        user_guess = str(request.args.get('input'))
+        isGuessed = user_guess == secret_word
+        correctIndexes = [1, 0]
+        existingIndexes = [2]
+        response = jsonify({'userGuess': user_guess, "isGuessed": isGuessed, "correctIndexes": correctIndexes, "existingIndexes": existingIndexes, 'secret': secret_word})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 @app.route('/data/', methods=['GET'])
 def wordle_page():
-        response = jsonify({'Page':'Wordle', 'data': dataset, 'avg': 1324})
+        global secret_word
+        secret_word = get_random_secret_word()
+        response = jsonify({'data': dataset})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
