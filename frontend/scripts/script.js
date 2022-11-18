@@ -120,7 +120,7 @@ function wordIsGuessed() {
 
 function markIndex(color, index) {
     const userInputs = getUserInputRow().querySelectorAll('input');
-    userInputs[index].classList.add("bg-" + color + "-500");
+    userInputs[index].classList.add("bg-" + "yellow" + "-500");
 }
 
 function getUserInputRow() {
