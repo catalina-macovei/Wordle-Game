@@ -46,7 +46,7 @@ function submitGuess() {
                             data.correctIndexes.forEach(index => markIndex('green', index))
                         }
                         if (data.existingIndexes.length) {
-                            data.existingIndexes.forEach(index => markIndex('gray', index))
+                            data.existingIndexes.forEach(index => markIndex('yellow', index))
                         }
                     }
                 })
@@ -117,10 +117,15 @@ function wordIsGuessed() {
     const arr = Array.from(Array(5).keys())
     arr.forEach(index => markIndex("green", index));
 }
-
+/*
+function letterIsGuessed(){
+    const arr = Array.from(Array(5).keys())
+    arr.forEach(index => markIndex("yellow", index));
+}
+*/
 function markIndex(color, index) {
     const userInputs = getUserInputRow().querySelectorAll('input');
-    userInputs[index].classList.add("bg-" + "yellow" + "-500");
+    userInputs[index].classList.add("bg-" + color + "-500");
 }
 
 function getUserInputRow() {

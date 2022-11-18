@@ -24,5 +24,9 @@ def correct_index_func(user_guess, the_secret_word):   # pentru fiecare cuvant s
     return [i for i in range(len(user_guess)) if user_guess[i] == the_secret_word[i]]
     
 def existing_index_func(user_guess, the_secret_word):  # 2.returneaza lista index la pozitia literei care exista in cuvant
-    return [user_guess.index(i) for i in user_guess if i in the_secret_word]
+    correct_index = correct_index_func(user_guess, the_secret_word)
+    return [user_guess.index(i) for i in user_guess if i in the_secret_word and user_guess.index(i) not in correct_index]
+   
+    
+    
 
