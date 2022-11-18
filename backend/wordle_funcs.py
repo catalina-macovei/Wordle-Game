@@ -28,5 +28,6 @@ def existing_index_func(user_guess, the_secret_word):  # 2.returneaza lista inde
     return [user_guess.index(i) for i in user_guess if i in the_secret_word and user_guess.index(i) not in correct_index]
    
     
+# optimization functions using entropy:
     
 
