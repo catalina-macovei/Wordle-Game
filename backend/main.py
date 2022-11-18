@@ -15,12 +15,13 @@ def home_page():
 
         return json_dump
 
+
 @app.route('/user/', methods=['GET'])
 def request_page():
         user_guess = str(request.args.get('input'))
         isGuessed = user_guess == secret_word
-        correctIndexes = [1, 0]
-        existingIndexes = [2]
+        correctIndexes = correct_index_func(user_guess, secret_word)
+        existingIndexes = existing_index_func(user_guess, secret_word)
         response = jsonify({'userGuess': user_guess, "isGuessed": isGuessed, "correctIndexes": correctIndexes, "existingIndexes": existingIndexes, 'secret': secret_word})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
