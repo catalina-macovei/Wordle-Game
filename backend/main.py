@@ -20,8 +20,12 @@ def home_page():
 def request_page():
         user_guess = str(request.args.get('input'))
         isGuessed = user_guess == secret_word
-        correctIndexes = correct_index_func(user_guess, secret_word)
-        existingIndexes = existing_index_func(user_guess, secret_word)
+        correctIndexes = []
+        existingIndexes = []
+        if not isGuessed:
+                correctIndexes = correct_index_func(user_guess, secret_word)
+                existingIndexes = existing_index_func(user_guess, secret_word)
+        
         response = jsonify({'userGuess': user_guess, "isGuessed": isGuessed, "correctIndexes": correctIndexes, "existingIndexes": existingIndexes, 'secret': secret_word})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response

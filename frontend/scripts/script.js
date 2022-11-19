@@ -1,4 +1,9 @@
 document.body.onload = () => {
+    isEntropy = false;
+    if (localStorage.getItem('isEntropy')) {
+        isEntropy = JSON.parse(localStorage.getItem('isEntropy'));
+    }
+    handleEntropySwitcher(isEntropy);
     fetch("http://127.0.0.1:5000/data/")
     .then((response) => {
         if (response.ok) {
@@ -21,15 +26,6 @@ function store_wordle_dataset(data){
     }
 }
 
-function display_fetched_words(data){
-   const list = document.querySelector(".words ul");
-   data.forEach(element => {
-    let li_element = document.createElement("li");
-    li_element.innerText = element;
-    list.appendChild(li_element);
-   });
-}
-
 function submitGuess() {
     const userWord = getUserWord(getLastUserInput());
     if (isInDataset(userWord)) {
@@ -39,6 +35,7 @@ function submitGuess() {
                 response.json()
                 .then(data => {
                     console.log(data);
+                    disableInputs();
                     if (data.isGuessed) {
                         wordIsGuessed();
                     } else {
@@ -48,6 +45,7 @@ function submitGuess() {
                         if (data.existingIndexes.length) {
                             data.existingIndexes.forEach(index => markIndex('yellow', index))
                         }
+                        addNewInputRow();
                     }
                 })
             } else {
@@ -116,6 +114,7 @@ function getLastUserInput() {
 function wordIsGuessed() {
     const arr = Array.from(Array(5).keys())
     arr.forEach(index => markIndex("green", index));
+    displayCongratulationsMessage();
 }
 /*
 function letterIsGuessed(){
@@ -128,9 +127,70 @@ function markIndex(color, index) {
     userInputs[index].classList.add("bg-" + color + "-500");
 }
 
+function disableInputs() {
+    getUserInputRow().querySelectorAll('input').forEach(input => input.disabled = true);
+}
+
 function getUserInputRow() {
-    const userPlayground = document.querySelector('#userPlayground');
     const userInputs = document.querySelector('#userPlayground').querySelectorAll('.word-input');//array of user inputs [0, 1,2].len
     const lastUserInputs = userInputs[userInputs.length - 1];
     return lastUserInputs;
+}
+
+function addNewInputRow() {
+    const userPlayGround = document.querySelector('#userPlayground');
+    const userInputsContainerDiv = document.createElement('div');
+    userInputsContainerDiv.classList.add('flex', 'justify-center', 'gap-2', 'word-input');
+    for(let i = 0; i < 5; i++) {
+        userInputsContainerDiv.append(generateInput())
+    }
+    userPlayGround.append(userInputsContainerDiv);
+}
+
+function generateInput() {
+    const input = document.createElement('input');
+    input.type = 'text'; 
+    input.maxLength = 1;
+    input.oninput = () => checkEnteredWord(input);
+    input.pattern = "[A-Z]";
+    input.classList.add('w-12', 'rounded-md', 'text-center');
+    return input;
+}
+
+function displayCongratulationsMessage() {
+    const pyroDiv = document.querySelector('.pyro');
+    const innerDiv= document.createElement('div');
+    innerDiv.classList = 'before';
+    pyroDiv.append(innerDiv);
+    innerDiv.classList.remove('before');
+    innerDiv.classList.add('after');
+    pyroDiv.append(innerDiv);
+    showResetButton();
+}
+
+function showResetButton() {
+    const resetBtn = document.querySelector('#userGuessButton');
+    resetBtn.innerText = 'Start new game';
+    resetBtn.classList.remove('hidden');
+    resetBtn.onclick = () => location.reload();
+}
+
+function toggleEntropy(element) {
+    const input = element.querySelector('input');
+    localStorage.setItem('isEntropy', JSON.stringify(input.checked));
+    location.reload();
+}
+
+function handleEntropySwitcher(isEntropy) {
+    const entropySwitcher = document.querySelector('#entropySwitcher');
+    entropySwitcher.querySelector('span').innerText = isEntropy ? "entropy on" : "no entropy";
+    entropySwitcher.querySelector('input').checked = isEntropy;
+    if (isEntropy) {
+        showEntropySuggestions()
+    }
+}
+
+
+function showEntropySuggestions() {
+    document.querySelector('#entropySuggestionsContainer').classList.remove('hidden');
 }
