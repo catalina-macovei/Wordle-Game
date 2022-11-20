@@ -8,13 +8,6 @@ app = Flask(__name__)
 secret_word = get_random_secret_word()
 
 char_frequency(dataset)
-@app.route('/', methods=['GET'])
-def home_page():
-        data_set = {'Page':'Home'}
-        json_dump = json.dumps(data_set)
-
-        return json_dump
-
 
 @app.route('/user/', methods=['GET'])
 def request_page():
@@ -22,9 +15,13 @@ def request_page():
         isGuessed = user_guess == secret_word
         correctIndexes = []
         existingIndexes = []
+        global user_guess_cpy 
+        user_guess_cpy = user_guess
+        global the_secret_word_cpy 
+        the_secret_word_cpy = secret_word
         if not isGuessed:
                 correctIndexes = correct_index_func(user_guess, secret_word)
-                existingIndexes = existing_index_func(user_guess, secret_word)
+                existingIndexes = existing_index_func(user_guess_cpy, the_secret_word_cpy)
         
         response = jsonify({'userGuess': user_guess, "isGuessed": isGuessed, "correctIndexes": correctIndexes, "existingIndexes": existingIndexes, 'secret': secret_word})
         response.headers.add('Access-Control-Allow-Origin', '*')

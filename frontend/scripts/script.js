@@ -4,7 +4,7 @@ document.body.onload = () => {
         isEntropy = JSON.parse(localStorage.getItem('isEntropy'));
     }
     handleEntropySwitcher(isEntropy);
-    fetch("http://127.0.0.1:5000/data/")
+    fetch("http://127.0.0.1:5000/data/?isEntropy=" + isEntropy)
     .then((response) => {
         if (response.ok) {
             response.json()

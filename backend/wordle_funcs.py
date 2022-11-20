@@ -7,7 +7,10 @@ def char_frequency(dataset):   #calculeaza frecventa literelor in cuvinte si le 
 
 def get_wordle_data_set():  # citeste datele din fisier
     f = open("data/cuvinte_wordle.txt", "r")
-    return [line[:-1] for line in f]
+    wordsArray = [line[:-1] for line in f]
+    wordsArray.pop(len(wordsArray) - 1)
+    return wordsArray
+
 
 dataset = get_wordle_data_set()  # stocheaza o lista cu cuvintele din fisier
 
@@ -20,11 +23,27 @@ def get_random_secret_word():
 
 
 def correct_index_func(user_guess, the_secret_word):   # pentru fiecare cuvant secret gaseste si returneaza 1.lista index la pozitia fixa a literei
-    return [i for i in range(len(user_guess)) if user_guess[i] == the_secret_word[i]]
-    
-def existing_index_func(user_guess, the_secret_word):  # 2.returneaza lista index la pozitia literei care exista in cuvant
-    correct_index = correct_index_func(user_guess, the_secret_word)
-    return [user_guess.index(i) for i in user_guess if i in the_secret_word and user_guess.index(i) not in correct_index]
+    global user_guess_cpy
+    global the_secret_word_cpy
+    user_guess_cpy = user_guess
+    the_secret_word_cpy = the_secret_word
+    list_index = []
+    for i in range(len(user_guess)):
+        if user_guess[i] == the_secret_word[i]:
+            user_guess_cpy = user_guess_cpy[0:i] + "0" + user_guess_cpy[i + 1:]
+            the_secret_word_cpy = the_secret_word_cpy[0:i] + "1" + the_secret_word_cpy[i + 1:]
+            list_index.append(i)
+    return list_index
+
+  
+def existing_index_func(user_guess_cpy, the_secret_word_cpy):   # 2.returneaza lista index la pozitia literei care exista in cuvant
+    list_index = []
+    for i in range(len(user_guess_cpy)):
+        if user_guess_cpy[i] in the_secret_word_cpy:
+            index = the_secret_word_cpy.index(user_guess_cpy[i])
+            list_index.append(i)
+            the_secret_word_cpy = the_secret_word_cpy[0:index] + "1" + the_secret_word_cpy[index + 1:]
+    return list_index
 
 # optimization functions using entropy:
     
