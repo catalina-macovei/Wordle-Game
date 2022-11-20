@@ -4,12 +4,15 @@ document.body.onload = () => {
         isEntropy = JSON.parse(localStorage.getItem('isEntropy'));
     }
     handleEntropySwitcher(isEntropy);
-    fetch("http://127.0.0.1:5000/data/?isEntropy=" + isEntropy)
+    fetch("http://127.0.0.1:5000/data/?isEntropy=" + (isEntropy ? "1" : "0"))
     .then((response) => {
         if (response.ok) {
             response.json()
             .then(data => {
                 store_wordle_dataset(data.data);
+                if (isEntropy) {
+                    localStorage.setItem('entropySet', JSON.stringify(data.entropy_set));
+                }
             })
         } else {
             throw(new Error("Something went wrong"))
@@ -192,5 +195,15 @@ function handleEntropySwitcher(isEntropy) {
 
 
 function showEntropySuggestions() {
-    document.querySelector('#entropySuggestionsContainer').classList.remove('hidden');
+    const entropyContainer = document.querySelector('#entropySuggestionsContainer');
+    if (localStorage.getItem('entropySet')) {
+        const entropySet = JSON.parse(localStorage.getItem('entropySet')) ?? [];
+        entropySet.forEach((word, index) => {
+            let newSuggestion = document.createElement('p');
+            newSuggestion.innerText = `${index + 1}. ${word}`;
+            entropyContainer.append(newSuggestion);
+        })
+    }
+    
+    entropyContainer.classList.remove('hidden');
 }
