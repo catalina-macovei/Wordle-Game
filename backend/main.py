@@ -19,8 +19,8 @@ def request_page():
         res = {'userGuess': user_guess, "isGuessed": isGuessed, "correctIndexes": results.get('correctIndexes'), "existingIndexes": results.get('existingIndexes'), 'secret': secret_word}
 
         isEntropy = str(request.args.get('isEntropy')) if str(request.args.get('isEntropy')) != "None" else 0
-        if isEntropy == 1:
-                res['entropy_set'] = H_cuv(dataset)
+        if isEntropy == '1':
+                res['entropy_set'] = H_cuv(results['dataset'])[:10]
                 
         response = jsonify(res)
         response.headers.add('Access-Control-Allow-Origin', '*')

@@ -31,13 +31,24 @@ function store_wordle_dataset(data){
 
 function submitGuess() {
     const userWord = getUserWord(getLastUserInput());
+    isEntropy = false;
+    if (localStorage.getItem('isEntropy')) {
+        isEntropy = JSON.parse(localStorage.getItem('isEntropy'));
+    }
+
     if (isInDataset(userWord)) {
-        fetch("http://127.0.0.1:5000/user/?input=" + userWord)
+        fetch("http://127.0.0.1:5000/user/?input=" + userWord + '&isEntropy=' + (isEntropy ? "1" : "0"))
         .then((response) => {
             if (response.ok) {
                 response.json()
                 .then(data => {
                     console.log(data);
+                    
+                    if (isEntropy) {
+                        localStorage.setItem('entropySet', JSON.stringify(data.entropy_set));
+                    }
+                    handleEntropySwitcher(isEntropy);
+
                     disableInputs();
                     if (data.isGuessed) {
                         wordIsGuessed();
@@ -196,6 +207,7 @@ function handleEntropySwitcher(isEntropy) {
 
 function showEntropySuggestions() {
     const entropyContainer = document.querySelector('#entropySuggestionsContainer');
+    entropyContainer.innerHTML = `<h3 class="text-center my-1">Suggestions list:</h3>    `
     if (localStorage.getItem('entropySet')) {
         const entropySet = JSON.parse(localStorage.getItem('entropySet')) ?? [];
         entropySet.forEach((word, index) => {

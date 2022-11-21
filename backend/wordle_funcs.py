@@ -8,10 +8,11 @@ def get_wordle_data_set():  # citeste datele din fisier
     wordsArray.pop(len(wordsArray) - 1)
     return wordsArray
 
-global dataset 
 dataset = get_wordle_data_set()
 
 def get_random_secret_word():
+    global dataset
+    dataset = get_wordle_data_set()
     return dataset[random.randint(0, len(dataset))]
 
 
@@ -40,6 +41,7 @@ def char_probability(dataset):   # calculeaza probabilitatea literelor
 char_probability_dict = char_probability(dataset)
 
 def H_cuv(cuvinte): # calculeaza entropia pentru fiecare cuvant din dataset
+    print(cuvinte)
     new_dic = {}
     for cuvant in cuvinte:
         s = 0
@@ -59,22 +61,31 @@ def filterDataSet(correctIndexes, existingIndexes, user_guess):
             for word in dataset:
                 if word[index] == user_guess[index]:
                     newDataset.append(word)
-        dataset = newDataset
-    if len(newDataset):
-        dataset = newDataset
-    newDataset = []
-    print("first run\n\n\n\n\n")
-    print(dataset)
+            dataset = newDataset               # stocam lista auxiliara in dataset. Astfel primim o lista mai scurta.
+            newDataset = [] 
+    
     if len(existingIndexes):
         for index in existingIndexes:
             for word in dataset:
-                if word.find(user_guess[index]):
+                if word.find(user_guess[index]) != -1:
                     newDataset.append(word)
-        dataset = newDataset
-    if len(newDataset):
-        dataset = newDataset
-    print("second run\n\n\n\n\n")    
-    print(dataset)
+            dataset = newDataset
+            newDataset = []
+    """
+    user_guess_cpy = user_guess
+    correctIndexes = existingIndexes.copy()
+    for index in correctIndexes:
+        user_guess_cpy = user_guess_cpy[0:index] + "0" + user_guess_cpy[index + 1:]
+        
+    for letter in user_guess_cpy:
+        if letter != '0':
+            letter_index = user_guess_cpy.find(letter)
+            for word in dataset:
+                if word[letter_index] != letter:
+                    newDataset.append(word)
+            dataset = newDataset
+            newDataset = []"""
+            
 
 
 def correct_index_func(user_guess, secret_word):   # pentru fiecare cuvant secret gaseste si returneaza 1.lista index la pozitia fixa a literei
@@ -94,9 +105,8 @@ def correct_index_func(user_guess, secret_word):   # pentru fiecare cuvant secre
             index = secret_word_cpy.find(user_guess_cpy[i])
             existing_index.append(i)
             secret_word_cpy = secret_word_cpy[0:index] + "-" + secret_word_cpy[index + 1:]
-            print(user_guess_cpy, secret_word_cpy)
     filterDataSet(correct_index, existing_index, user_guess)
-    return {'correctIndexes': correct_index, 'existingIndexes': existing_index}
+    return {'correctIndexes': correct_index, 'existingIndexes': existing_index, 'dataset': dataset}
 # optimization functions using entropy:
     
 def word_dict(): # returneaza un dictionar cuvant:H(cuv)=0 - de utilizat pentru a crea dictionarul initial cu items din fisierul de cuvinte, la fiecare start a new game
