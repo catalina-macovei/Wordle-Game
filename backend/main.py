@@ -1,15 +1,17 @@
-import random
 from flask import *
-import json, time
 from flask import jsonify
 from wordle_funcs import *
+from flask_cors import CORS,cross_origin
+import math
+
 
 app = Flask(__name__)
-secret_word = get_random_secret_word()
+CORS(app, support_credentials=True)
 
-char_frequency(dataset)
+global secret_word
 
 @app.route('/user/', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def request_page():
         user_guess = str(request.args.get('input'))
         isGuessed = user_guess == secret_word
@@ -23,19 +25,19 @@ def request_page():
                 res['entropy_set'] = H_cuv(results['dataset'])[:10]
                 
         response = jsonify(res)
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 @app.route('/data/', methods=['GET'])
+@cross_origin(supports_credentials=True)
 def wordle_page():
         global secret_word
         secret_word = get_random_secret_word()
+
         isEntropy = str(request.args.get('isEntropy')) if str(request.args.get('isEntropy')) != "None" else 0
         res = {'data': dataset}
         if isEntropy == '1':
                 res['entropy_set'] = H_cuv(dataset)[:10]
         response = jsonify(res)
-        response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
 

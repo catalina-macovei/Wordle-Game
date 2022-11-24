@@ -12,6 +12,7 @@ document.body.onload = () => {
                 store_wordle_dataset(data.data);
                 if (isEntropy) {
                     localStorage.setItem('entropySet', JSON.stringify(data.entropy_set));
+                    showEntropySuggestions()
                 }
             })
         } else {
@@ -41,14 +42,12 @@ function submitGuess() {
         .then((response) => {
             if (response.ok) {
                 response.json()
-                .then(data => {
-                    console.log(data);
-                    
+                .then(data => {                    
                     if (isEntropy) {
                         localStorage.setItem('entropySet', JSON.stringify(data.entropy_set));
-                    }
-                    handleEntropySwitcher(isEntropy);
+                        showEntropySuggestions()
 
+                    }
                     disableInputs();
                     if (data.isGuessed) {
                         wordIsGuessed();
@@ -130,12 +129,7 @@ function wordIsGuessed() {
     arr.forEach(index => markIndex("green", index));
     displayCongratulationsMessage();
 }
-/*
-function letterIsGuessed(){
-    const arr = Array.from(Array(5).keys())
-    arr.forEach(index => markIndex("yellow", index));
-}
-*/
+
 function markIndex(color, index) {
     const userInputs = getUserInputRow().querySelectorAll('input');
     userInputs[index].classList.add("bg-" + color + "-500");
@@ -199,9 +193,6 @@ function handleEntropySwitcher(isEntropy) {
     const entropySwitcher = document.querySelector('#entropySwitcher');
     entropySwitcher.querySelector('span').innerText = isEntropy ? "entropy on" : "no entropy";
     entropySwitcher.querySelector('input').checked = isEntropy;
-    if (isEntropy) {
-        showEntropySuggestions()
-    }
 }
 
 

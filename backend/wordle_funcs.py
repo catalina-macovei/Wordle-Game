@@ -6,6 +6,7 @@ def get_wordle_data_set():  # citeste datele din fisier
     f = open("data/cuvinte_wordle.txt", "r")
     wordsArray = [line[:-1] for line in f]
     wordsArray.pop(len(wordsArray) - 1)
+    f.close()
     return wordsArray
 
 dataset = get_wordle_data_set()
@@ -13,39 +14,23 @@ dataset = get_wordle_data_set()
 def get_random_secret_word():
     global dataset
     dataset = get_wordle_data_set()
-    return dataset[random.randint(0, len(dataset))]
-
-
-char_total_count = (len(get_wordle_data_set()) * 5)
-
-def char_frequency(dataset):   #calculeaza frecventa literelor in cuvinte si le sorteaza intr-un alt dictionar
-    list_of_char = [chr(x + 65) for x in range(0, 26)]
-    char_dict = { i : 0 for i in list_of_char }
-    for cuvant in dataset:
-        for litera in set(cuvant):
-            char_dict[litera] = char_dict.get(litera) + 1
-
-    sorted_dict = dict(sorted(char_dict.items(), key=lambda item: item[1], reverse=True))
-    return sorted_dict
-
-
-char_frequency_dict = char_frequency(dataset)
+    return dataset[random.randint(0, len(dataset) - 1)]
 
 def char_probability(dataset):   # calculeaza probabilitatea literelor
+    char_total_count = len(dataset) * 5
     list_of_char = [chr(x + 65) for x in range(0, 26)] #sir de frecventa [A - Z]
     d = {y:str(dataset).count(y)/char_total_count for y in set(list_of_char)}
     sorted_dict = dict(sorted(d.items(), key=lambda item: item[1], reverse=True))
     return sorted_dict
 
 
-char_probability_dict = char_probability(dataset)
-
 def H_cuv(cuvinte): # calculeaza entropia pentru fiecare cuvant din dataset
-    print(cuvinte)
+    char_probability_dict = char_probability(dataset)
+
     new_dic = {}
     for cuvant in cuvinte:
         s = 0
-        for litera in cuvant:
+        for litera in set(cuvant):
             s = s - char_probability_dict.get(litera) * math.log2(char_probability_dict.get(litera))
         new_dic[cuvant] = round(s, 4)
     sorted_dict = list(sorted(new_dic.items(), key=lambda item: item[1], reverse=True))
@@ -56,6 +41,7 @@ def H_cuv(cuvinte): # calculeaza entropia pentru fiecare cuvant din dataset
 def filterDataSet(correctIndexes, existingIndexes, user_guess):
     newDataset = []
     global dataset
+    wrongIndexes = {0,1,2,3,4}-set(correctIndexes+existingIndexes)
     if len(correctIndexes):
         for index in correctIndexes:
             for word in dataset:
@@ -67,26 +53,24 @@ def filterDataSet(correctIndexes, existingIndexes, user_guess):
     if len(existingIndexes):
         for index in existingIndexes:
             for word in dataset:
-                if word.find(user_guess[index]) != -1:
+                if word.find(user_guess[index]) != -1 and word[index] != user_guess[index]:
                     newDataset.append(word)
             dataset = newDataset
             newDataset = []
-    """
-    user_guess_cpy = user_guess
-    correctIndexes = existingIndexes.copy()
-    for index in correctIndexes:
-        user_guess_cpy = user_guess_cpy[0:index] + "0" + user_guess_cpy[index + 1:]
-        
-    for letter in user_guess_cpy:
-        if letter != '0':
-            letter_index = user_guess_cpy.find(letter)
-            for word in dataset:
-                if word[letter_index] != letter:
-                    newDataset.append(word)
-            dataset = newDataset
-            newDataset = []"""
-            
 
+    corr_ex_chars = set([user_guess[i] for i in correctIndexes+existingIndexes])
+    if len(wrongIndexes) != 0:
+        for index in wrongIndexes:
+            if user_guess[index] not in corr_ex_chars:
+                i=0
+                while i in range(len(dataset)):
+                    if user_guess[index] in dataset[i]:
+                        del dataset[i]
+                    else:
+                        i+=1
+    def myFunc(word):
+        return len(set(word))
+    dataset.sort(key=myFunc, reverse=True)     
 
 def correct_index_func(user_guess, secret_word):   # pentru fiecare cuvant secret gaseste si returneaza 1.lista index la pozitia fixa a literei
     user_guess_cpy = user_guess
@@ -108,31 +92,4 @@ def correct_index_func(user_guess, secret_word):   # pentru fiecare cuvant secre
     filterDataSet(correct_index, existing_index, user_guess)
     return {'correctIndexes': correct_index, 'existingIndexes': existing_index, 'dataset': dataset}
 # optimization functions using entropy:
-    
-def word_dict(): # returneaza un dictionar cuvant:H(cuv)=0 - de utilizat pentru a crea dictionarul initial cu items din fisierul de cuvinte, la fiecare start a new game
-    return {x:0 for x in get_wordle_data_set()}
 
-
-# update_datset primeste ca parametri dictionarul de cuvinte, cuvantul incercat, lista correct_index si lista existing_index si returneaza un nou dictionar de cuvinte ale carui 
-# cuvinte se potrivesc pattern ului dat de un cuvant de 5 litere cu literele corecte pe pozitiile corecte, iar pe pozitiile ramase litere care se pot afla in cuvantul 
-# secret, dar care nu au primit raspuns negativ la incercare de guess
-
-import re
-def update_dataset(dataset,word,correct_index,existing_index): 
-    pattern=[0,0,0,0,0]                                         
-    for i in correct_index:                                     
-        pattern[i]=word[i]                                       
-    list_of_char = [chr(x + 65) for x in range(0, 26)]          
-    rest_index = [i for i in range(5) if i not in correct_index]
-    existing_index_str = "".join([word[i] for i in existing_index])
-    ls = [cuv for cuv in dataset if [True for c in existing_index_str if c in cuv]]
-    not_existing_letters = [word[i] for i in rest_index if i not in existing_index]
-    possible_letters ="".join([c for c in list_of_char if c not in not_existing_letters])
-    for i in rest_index:
-        pattern[i]=f"[{possible_letters}]"
-    pattern = "".join(pattern)
-    pattern = re.compile(pattern)
-    existing_index_str = re.compile(existing_index_str)
-    ls = pattern.findall(" ".join([cuv for cuv in ls ]))
-    dict = H_cuv({cuv:0 for cuv in ls})
-    return dict
