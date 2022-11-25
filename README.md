@@ -20,6 +20,6 @@ Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Stud
 3. Dupa ce ați instalat pachetele necesare, treceți in backend directory și rulati în terminal comanda `flask --app main.py --debug run` pentru a porni serverul flask in development mode, (permite hot reload),  sau 3.2 pentru a porni serverul. 
   
  
-4. Dupa ce serverul a pornint, acesati folderul frontend si deschideti fisierul index.html în browser.
+4. Dupa ce serverul a pornit, accesati folderul frontend si deschideti fisierul index.html în browser.
 5. Enjoy our Wordle Game with entropy or without entropy.
 #### Good luck :blush: !  
