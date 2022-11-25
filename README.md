@@ -1,4 +1,4 @@
-# Wordle Game
+# Wordle Game :books:
 
 Aplicația funcționeaza pe baza metodei Client-Sever. În aceasta structura, Clientul are rolul de a interacționa cu utilizatorul, oferind o interfață grafică (UI) sugestiv și de a facilita interacțiunea utilizatorului cu aplicația. În același timp, serverul are rolul de a prelucra datele primite de la utilizator si de a răspunde dinamic cererilor primite de la Client. În aceeași ordine de idei,  pastrează cuvântul secret si setul de date pentru fiecare sesiune de joc.
 
