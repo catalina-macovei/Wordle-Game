@@ -8,7 +8,7 @@ Aplicația funcționeaza pe baza metodei Client-Sever. În aceasta structura, Cl
 ### :pushpin: Obiectivul jocului
  Wordle Game determină utilizatorul să ghicească un cuvânt de cinci litere, introduse de la tastatură. În esență, jocul se bazează pe două mecanisme, primul este de a ghici cuvântul dintr-un număr nelimitat de încercări, iar al doilea ar fi de a ghici cuvântul, folosind lista de sugestii, unde e indicată cea mai bună opțiune, respectiv cuvântul cu entropia maximă. 
 
-### Cerințe pentru rularea jocului:
+### :scroll: Cerințe pentru rularea jocului:
 
 Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Studio Code pentru un mediu de lucru corespunzător cu Python 3.11 și managerul de pachete Python pip. 
 
