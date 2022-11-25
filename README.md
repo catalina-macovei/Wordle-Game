@@ -12,7 +12,7 @@ Aplicația funcționeaza pe baza metodei Client-Sever. În aceasta structura, Cl
 
 Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Studio Code pentru un mediu de lucru corespunzător cu Python 3.11 și managerul de pachete Python pip. 
 
-#### Instructiuni de rulare: :zap:
+#### :zap:Instructiuni de rulare: :zap:
 
 1. Clonați jocul din acest GitHub repository pe calculatorul local cu ajutorul terminalului.
 2. Accesati folderul backend si rulati managerul de pachete *pip* pentru a instala pachetele necesare rularii serverului:
