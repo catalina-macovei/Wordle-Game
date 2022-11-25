@@ -39,7 +39,6 @@ def request_page():
 def wordle_page():
         global secret_word
         secret_word = get_random_secret_word()
-        secret_word = "UEDUL"
         isEntropy = str(request.args.get('isEntropy')) if str(request.args.get('isEntropy')) != "None" else 0
         res = {'data': dataset}
         if isEntropy == '1':

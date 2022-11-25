@@ -92,6 +92,7 @@ def correct_index_func(user_guess, secret_word):   # pentru fiecare cuvant secre
             secret_word_cpy = secret_word_cpy[0:index] + "-" + secret_word_cpy[index + 1:]
     filterDataSet(correct_index, existing_index, user_guess)
     return {'correctIndexes': correct_index, 'existingIndexes': existing_index, 'dataset': dataset}
+
 # optimization functions using entropy:
 
 def get_avg():
