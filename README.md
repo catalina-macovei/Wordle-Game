@@ -18,6 +18,7 @@ Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Stud
 2. Accesati folderul backend si rulati managerul de pachete *pip* pentru a instala pachetele necesare rularii serverului:
   
   `pip install --no-cache-dir -r requirements.txt`
+  
 3. Dupa ce ați instalat pachetele necesare, treceți in backend directory și rulati în terminal comanda `flask --app main.py --debug run` pentru a porni serverul flask in development mode, (permite hot reload),  sau 3.2 pentru a porni serverul. 
   
  
