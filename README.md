@@ -23,3 +23,8 @@ Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Stud
 4. Dupa ce serverul a pornit, accesati folderul frontend si deschideti fisierul index.html în browser.
 5. Enjoy our Wordle Game with entropy or without entropy.
 #### Good luck :blush: !  
+##### Echipa:
+###### grupa 142
+1. Macovei Cătălina
+2. Alexandra T
+3. Popescu Pavel-Yanis
