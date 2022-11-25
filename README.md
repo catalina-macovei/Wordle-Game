@@ -10,11 +10,11 @@ Aplicația funcționeaza pe baza metodei Client-Sever. În aceasta structura, Cl
 
 ### Cerințe pentru rularea jocului:
 
-Pentru a rula jocul este necesar sa aveti instalat Python 3.11 și managerul de pachete Python pip. 
+Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Studio Code pentru un mediu de lucru corespunzător cu Python 3.11 și managerul de pachete Python pip. 
 
 #### Instructiuni de rulare: :zap:
 
-1. Asigurați-vă că aveți instalată aplicația Visual Studio Code pentru un mediu de lucru corespunzător, iar apoi clonați jocul din acest GitHub repository pe calculatorul local cu ajutorul terminalului.
+1. Clonați jocul din acest GitHub repository pe calculatorul local cu ajutorul terminalului.
 2. Accesati folderul backend si rulati managerul de pachete *pip* pentru a instala pachetele necesare rularii serverului:
     2.1
 3. Dupa ce ați instalat pachetele necesare, treceți in backend directory și rulati în terminal comanda 3.1 pentru a porni serverul flask in development mode, (permite hot reload),  sau 3.2 pentru a porni serverul. 
