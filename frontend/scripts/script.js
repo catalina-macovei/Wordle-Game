@@ -193,6 +193,11 @@ function handleEntropySwitcher(isEntropy) {
     const entropySwitcher = document.querySelector('#entropySwitcher');
     entropySwitcher.querySelector('span').innerText = isEntropy ? "entropy on" : "no entropy";
     entropySwitcher.querySelector('input').checked = isEntropy;
+    if (isEntropy) {
+        document.getElementById('showAvg').classList.remove('hidden');
+    } else {
+        document.getElementById('showAvg').classList.add('hidden');
+    }
 }
 
 

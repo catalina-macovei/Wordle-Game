@@ -10,6 +10,7 @@ def get_wordle_data_set():  # citeste datele din fisier
     return wordsArray
 
 dataset = get_wordle_data_set()
+        
 
 def get_random_secret_word():
     global dataset
@@ -93,3 +94,32 @@ def correct_index_func(user_guess, secret_word):   # pentru fiecare cuvant secre
     return {'correctIndexes': correct_index, 'existingIndexes': existing_index, 'dataset': dataset}
 # optimization functions using entropy:
 
+def get_avg():
+    dataset = get_wordle_data_set()
+    f = open("data/wordle_results.txt", "a")
+    for word in dataset:
+        guesses = []
+        guesses.append(word)
+        isGuessed = False
+        while(isGuessed):
+            suggestion = '' #getSuggestion
+            if (suggestion != word):
+                guesses.append(word)
+            else:
+                f.write(str(guesses))
+    f.close()
+    return {'avg': calc_avg()} #call read file and calc avg
+
+def calc_avg(): 
+    f = open("data/wordle_results.txt", "r")
+    results = [line[:-1] for line in f]
+    total_guesses = 0
+    total_lines = 0
+    #go through each line 
+    for idx, line in results:
+        total_lines += 1
+        for word in line:
+            if (idx != 0):
+                total_guesses += 1
+    f.close()
+    return 3.8 #total_guesses / total_lines

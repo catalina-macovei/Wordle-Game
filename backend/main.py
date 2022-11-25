@@ -10,6 +10,13 @@ CORS(app, support_credentials=True)
 
 global secret_word
 
+@app.route('/average', methods=['GET'])
+@cross_origin(supports_credentials=True)
+def request_avg():
+        #call function get_avg()
+        return jsonify({'avg': 3.8})
+
+
 @app.route('/user/', methods=['GET'])
 @cross_origin(supports_credentials=True)
 def request_page():
@@ -32,7 +39,7 @@ def request_page():
 def wordle_page():
         global secret_word
         secret_word = get_random_secret_word()
-
+        secret_word = "UEDUL"
         isEntropy = str(request.args.get('isEntropy')) if str(request.args.get('isEntropy')) != "None" else 0
         res = {'data': dataset}
         if isEntropy == '1':
