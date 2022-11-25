@@ -5,7 +5,7 @@ Aplicația funcționeaza pe baza metodei Client-Sever. În aceasta structura, Cl
  Componenta client este construita pe baza tehnologiilor web, utilizate pe front-end HTML, CSS si JavaScript. In timp ce Serverul este creat pe baza frameworkului Flask, care la rândul său se bazează pe limbajului de programare Python.
 
 
-### Obiectivul jocului
+### :pushpin: Obiectivul jocului
  Wordle Game determină utilizatorul să ghicească un cuvânt de cinci litere, introduse de la tastatură. În esență, jocul se bazează pe două mecanisme, primul este de a ghici cuvântul dintr-un număr nelimitat de încercări, iar al doilea ar fi de a ghici cuvântul, folosind lista de sugestii, unde e indicată cea mai bună opțiune, respectiv cuvântul cu entropia maximă. 
 
 ### Cerințe pentru rularea jocului:
