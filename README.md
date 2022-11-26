@@ -16,7 +16,7 @@ Aplicația funcționeaza pe baza metodei Client-Sever. În aceasta structura, Cl
 
 	3. nu contin literele care au primit feedback negativ in urma incercarii de ghicire 
 
-#####Sugestia finala este cuvantul care indeplineste toate conditiile de mai sus si care are entropie maxima.
+##### Sugestia finala este cuvantul care indeplineste toate conditiile de mai sus si care are entropie maxima.
  
 
 ### :scroll: Cerințe pentru rularea jocului:
