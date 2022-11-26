@@ -7,6 +7,17 @@ Aplicația funcționeaza pe baza metodei Client-Sever. În aceasta structura, Cl
 
 ### :pushpin: Obiectivul jocului
  Wordle Game determină utilizatorul să ghicească un cuvânt de cinci litere, introduse de la tastatură. În esență, jocul se bazează pe două mecanisme, primul este de a ghici cuvântul dintr-un număr nelimitat de încercări, iar al doilea ar fi de a ghici cuvântul, folosind lista de sugestii, unde e indicată cea mai bună opțiune, respectiv cuvântul cu entropia maximă. 
+ #### :alarm_clock: Optimizare & Entropie:
+ Optimizarea procesului de ghicire a cuvantului secret a fost realizata prin implementarea in Python  a unor functii ce au la baza criteriul entropiei. Astfel, se calculeaza probabilitatea de aparitie in lista de cuvinte a fiecarei litere din alfabet, care este apoi folosita pentru a determina entropia fiecarui cuvant din lista. Folosind feedback-ul primit in urma unei incercari de ghicire, lista de cuvinte din care este aleasa urmatoarea incercare este filtrata astfel incat sa mai contina doar cuvinte cat mai apropiate de forma cuvantului secret. Mai specific, doar cuvintele care:  
+
+	1. pastreaza literele a caror pozitie corecta in cuvant a fost ghicita 
+
+	2. contin literele care sunt in cuvantul secret, dar a caror pozitie nu a fost ghicita. Din acestea se aleg doar cele care nu incearca sa plaseze litera existenta pe aceeasi pozitie pe care au testat o incercarile precedente si care s a dovedit a fi incorecta 
+
+	3. nu contin literele care au primit feedback negativ in urma incercarii de ghicire 
+
+#####Sugestia finala este cuvantul care indeplineste toate conditiile de mai sus si care are entropie maxima.
+ 
 
 ### :scroll: Cerințe pentru rularea jocului:
 
@@ -28,5 +39,5 @@ Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Stud
 ##### Echipa: Creative Team Name :zap:
 ###### grupa 142
 1. Macovei Cătălina
-2. Alexandra T
+2. Alexandra Toma
 3. Popescu Pavel-Yanis
