@@ -10,12 +10,6 @@ CORS(app, support_credentials=True)
 
 global secret_word
 
-@app.route('/average', methods=['GET'])
-@cross_origin(supports_credentials=True)
-def request_avg():
-        #call function get_avg()
-        return jsonify({'avg': 3.8})
-
 
 @app.route('/user/', methods=['GET'])
 @cross_origin(supports_credentials=True)
@@ -43,6 +37,7 @@ def wordle_page():
         res = {'data': dataset}
         if isEntropy == '1':
                 res['entropy_set'] = H_cuv(dataset)[:10]
+                res['avg'] = 4.58
         response = jsonify(res)
         return response
 

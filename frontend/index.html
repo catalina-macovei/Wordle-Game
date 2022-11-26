@@ -10,10 +10,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div id="app" class="p-8 relative">
+    <div id="app" class="h-screen relative">
         <div class="fixed top-12 text-gray-900 left-4 rounded-md bg-white shadow-md w-56 py-4 px-2 hidden" id="entropySuggestionsContainer"></div>
         <div class="pyro"></div>
-        <div class="max-w-md mx-auto">
+        <div class="h-full w-full overflow-auto app-content">
             <h1 class="text-center text-5xl font-bold mb-4 font-extrabold text-transparent text-8xl bg-clip-text bg-gradient-to-r from-blue-400 to-pink-600">Wordle</h1>
             <div class="flex justify-center items-center">
                 <label class="inline-flex relative items-center cursor-pointer" onchange="toggleEntropy(this)" id="entropySwitcher">
@@ -22,7 +22,7 @@
                     <span class="ml-3 text-md font-medium text-white dark:text-white-300">no entropy</span>
                 </label>
             </div>
-            <article class="space-y-1 p-4 text-white">
+            <article class="space-y-1 p-4 text-white max-w-md mx-auto">
                 <b>Short user guide:</b>
                 <small>You have multiple attempts, with each effort consisting of 5 letters. If you type a word and immediately see a letter become green, you have entered the proper word.
                     It is possible that a letter will become yellow if it appears in the word to be guessed, but it will be in the incorrect location. If the color doesn't change, it means the letters were wrong guesses and should not be used again in the next word. </small>
@@ -45,7 +45,6 @@
                 </div>
             </div>
         </div>
-        <button id="showAvg" class="fixed button-6 left-6 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 hidden">Entropy avg</button>
     </div>
    <script src="scripts/script.js"></script> 
 </body>

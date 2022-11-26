@@ -12,6 +12,7 @@ document.body.onload = () => {
                 store_wordle_dataset(data.data);
                 if (isEntropy) {
                     localStorage.setItem('entropySet', JSON.stringify(data.entropy_set));
+                    localStorage.setItem('entropyAvg', JSON.stringify(data.avg));
                     showEntropySuggestions()
                 }
             })
@@ -81,6 +82,9 @@ function displayError(message){
     const userError = document.querySelector(".userError");
     userError.classList = 'text-xs userError mb-4 text-red-500';
     userError.innerText = message;
+    setTimeout(() => {
+        userError.classList.add('hidden')
+    }, 3000)
 }
 
 function getUserWord(inputElement){
@@ -113,6 +117,7 @@ function isAlpha(word){
 
 function showGuessButton() {
     document.querySelector("#userGuessButton").classList.remove('hidden');
+    scrollToBottomOfThePage();
 }
 
 function hideGuessButton() {
@@ -153,6 +158,12 @@ function addNewInputRow() {
         userInputsContainerDiv.append(generateInput())
     }
     userPlayGround.append(userInputsContainerDiv);
+    scrollToBottomOfThePage()
+}
+
+function scrollToBottomOfThePage() {
+    const appContentContainer = document.querySelector('.app-content');
+    appContentContainer.scrollTop =  appContentContainer.scrollHeight + 100;
 }
 
 function generateInput() {
@@ -180,6 +191,7 @@ function showResetButton() {
     const resetBtn = document.querySelector('#userGuessButton');
     resetBtn.innerText = 'Start new game';
     resetBtn.classList.remove('hidden');
+    scrollToBottomOfThePage();
     resetBtn.onclick = () => location.reload();
 }
 
@@ -193,17 +205,19 @@ function handleEntropySwitcher(isEntropy) {
     const entropySwitcher = document.querySelector('#entropySwitcher');
     entropySwitcher.querySelector('span').innerText = isEntropy ? "entropy on" : "no entropy";
     entropySwitcher.querySelector('input').checked = isEntropy;
-    if (isEntropy) {
-        document.getElementById('showAvg').classList.remove('hidden');
-    } else {
-        document.getElementById('showAvg').classList.add('hidden');
-    }
+    
 }
 
 
 function showEntropySuggestions() {
     const entropyContainer = document.querySelector('#entropySuggestionsContainer');
-    entropyContainer.innerHTML = `<h3 class="text-center my-1">Suggestions list:</h3>    `
+    entropyContainer.innerHTML = `
+    <h3 class="text-center my-1 font-bold">
+        Suggestions list:
+    </h3> 
+    <h4 class="mb-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-center text-white p-2 rounded-md">
+        guesses avg: ${JSON.parse(localStorage.getItem('entropyAvg'))}
+    </h4>`
     if (localStorage.getItem('entropySet')) {
         const entropySet = JSON.parse(localStorage.getItem('entropySet')) ?? [];
         entropySet.forEach((word, index) => {
