@@ -24,15 +24,14 @@ Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Stud
 #### :zap:Instructiuni de rulare: :zap:
 
 1. Clonați jocul din acest GitHub repository pe calculatorul local cu ajutorul terminalului.
-2. Accesati folderul backend si rulati managerul de pachete *pip* pentru a instala pachetele necesare rularii serverului:
+2. Cu ajutorul terminalului acesati folderul **backend** si rulati managerul de pachete **pip** pentru a instala pachetul **Flask** si **Flask_cors** necesare lansarii serverului::
+  2.1 ```pip install Flask```
+  2.2 ```pip install flask_cors```
   
-  `pip install --no-cache-dir -r requirements.txt`
-  
-3. Dupa ce ați instalat pachetele necesare, treceți in backend directory și rulati în terminal comanda `flask --app main.py --debug run` pentru a porni serverul flask in development mode, (permite hot reload),  sau 3.2 pentru a porni serverul. 
-  
- 
-4. Dupa ce serverul a pornit, accesati folderul frontend si deschideti fisierul index.html în browser.
+3. Dupa ce ați instalat pachetele necesare, treceți in backend directory și rulati în terminal comanda `flask --app main.py --debug run` pentru a porni serverul flask in development mode, (permite hot reload),  sau 3.2 ```flask --app main.py``` pentru a porni serverul in regim normal. 
+4. Dupa ce serverul a pornit, accesati folderul frontend si lansati un server care ruleaza fisierul index.html (cel mai simplu server poate fi rulat folosind optiunea Go Live a IDE-lui VS Code) .
 5. Enjoy our Wordle Game with entropy or without entropy.
+
 #### Good luck :blush: !  
 ##### Echipa: Creative Team Name :zap:
 ###### grupa 142
