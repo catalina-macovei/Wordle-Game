@@ -34,7 +34,7 @@ Pentru a rula jocul, asigurați-vă că aveți instalată aplicația Visual Stud
 5. Enjoy our Wordle Game with entropy or without entropy.
 
 #### Good luck :blush: !  
-##### Echipa: Creative Team Name :zap:
+##### Echipa: Vitality :zap:
 ###### grupa 142
 1. Macovei Cătălina
 2. Alexandra Toma
